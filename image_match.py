@@ -4,10 +4,10 @@ Spyder Editor
 
 This is a temporary script file.
 """
-#############################################################################
-########################### Library Declaration #############################
-#############################################################################
-
+import os
+import inspect
+app_path = inspect.getfile(inspect.currentframe())
+directory = os.path.realpath(os.path.dirname(app_path))
 import numpy as np
 import cv2
 import os
@@ -19,10 +19,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.metrics import accuracy_score
 import shutil
 
-##############################################################################
-##############################################################################
-################### Make function for patches generation######################
-##############################################################################
+################### Make function for patches generation
 
 def croppat(imagr,windowsize_r,windowsize_c):
     datanr = []
@@ -34,22 +31,10 @@ def croppat(imagr,windowsize_r,windowsize_c):
             vectnr.append(window.flatten())
     return datanr, vectnr
 
-#d = 0
-#image_list_a = []
-#    data.append(img)
-#    xy = str(files[(f1)])
-#    image_list_a.append(im)
-#   filename = filename = "/home/vcs/Documents/consultant/Aout/" + f1.split("/")[-1]    
-# Crop out the window   name='%s%s.png' % str(f1)
-#        window = croppat(image_list_a,windowsize_r,windowsize_c)
+################### Read in Images from Directory A
 
-##############################################################################
-##############################################################################
-################### Read in Images from Directory A ##########################
-##############################################################################
-
-img_dir = "C:/Users/olahs/Documents/Python_scripts/consultant/A/" # Enter Directory of all images 
-outpath = "C:/Users/olahs/Documents/Python_scripts/consultant/Aout/"
+img_dir = os.path.join(directory, "consultant/A/") # Enter Directory of all images
+outpath = os.path.join(directory, "consultant/Aout/")
 data_path = os.path.join(img_dir,'*g')
 
 
@@ -78,34 +63,14 @@ for f1 in files:
         mh = datanr[i]
         filename=os.path.join(outpath,f1n,"%s.png" % i)
         cv2.imwrite(filename, mh)
-#    filename=os.path.join('/home/vcs/Documents/consultant/Aout',"%s.png" % r)
-#            filename = filename = "/home/vcs/Documents/consultant/Aout/" 
-#            cv2.imwrite(filename, window)
-#    data1.append(np.array(vectnr))
     vnn1 = np.array(vectnr)
     data1 = np.append(data1, vnn1, axis=0)
-#    data1.append(np.array(vectnr))
-##    data1 = np.concatenate(data1, np.array(vectnr))
 
-
-
-##############################################################################
-##############################################################################
-################### Read in Images from Directory B ##########################
-##############################################################################
-
-img_dir = "C:/Users/olahs/Documents/Python_scripts/consultant/B/" # Enter Directory of all images 
-outpath = "C:/Users/olahs/Documents/Python_scripts/consultant/Bout/"
+################### Read in Images from Directory B #
+img_dir = os.path.join(directory, "consultant/B/") # Enter Directory of all images
+outpath = os.path.join(directory, "consultant/Bout/")
 data_path = os.path.join(img_dir,'*g')
 
-#def croppat(image_list_a,windowsize_r,windowsize_c):
-#    for r in range(0,image_list_a.shape[0] - windowsize_r, windowsize_r):
-#        for c in range(0,image_list_a.shape[1] - windowsize_c, windowsize_c):
-#            window = image_list_a[r:r+windowsize_r,c:c+windowsize_c]
-#            return window
-
-#d = 0
-#image_list_a = []
 
 files = glob.glob(data_path) 
 #data2 = np.array([])
@@ -127,39 +92,11 @@ for f1 in files:
         mh = datanr[i]
         filename=os.path.join(outpath,f1n,"%s.png" % i)
         cv2.imwrite(filename, mh)
-#    filename=os.path.join('/home/vcs/Documents/consultant/Aout',"%s.png" % r)
-#            filename = filename = "/home/vcs/Documents/consultant/Aout/" 
-#            cv2.imwrite(filename, window)
 #    data2.append(np.array(vectnr))
     vnn = np.array(vectnr)
     data2 = np.append(data2, vnn, axis=0)
-#    data.append(img)
-#    xy = str(files[(f1)])
-#    image_list_a.append(im)
-#   filename = filename = "/home/vcs/Documents/consultant/Aout/" + f1.split("/")[-1]    
-# Crop out the window   name='%s%s.png' % str(f1)
-#        window = croppat(image_list_a,windowsize_r,windowsize_c)
-#    for r in range(0,gray.shape[0] - windowsize_r, windowsize_r):
-#        for c in range(0,gray.shape[1] - windowsize_c, windowsize_c):
-#            window = gray[r:r+windowsize_r,c:c+windowsize_c]
-#            filename=os.path.join('/home/vcs/Documents/consultant/Bout',"%s.png" % r)
-##            filename = filename = "/home/vcs/Documents/consultant/Aout/" 
-#            cv2.imwrite(filename, window)
-#            data2.append(window.flatten())
 
-
-# Visualize image ande first patch
-#imgplot = plt.imshow(grayn)
-#plt.show()
-
-#imgplot = plt.imshow(datanr[1], cmap='gray')
-#plt.show()
-
-
-##############################################################################
-##############################################################################
-################### Predict using SVM classifier  ############################
-##############################################################################
+################### Predict using SVM classifier  m
 
 At = [1] * len(data1)
 Bt = [0] * len(data2)
